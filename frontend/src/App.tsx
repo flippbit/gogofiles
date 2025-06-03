@@ -2,7 +2,12 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Logo from "./assets/images/logo-universal.png";
 import { useState } from "react";
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 import type * as React from "react";
 import { Greet } from "../wailsjs/go/main/App.js";
 
@@ -13,29 +18,37 @@ function App() {
   const updateResultText = (result: string) => setResultText(result);
 
   function greet() {
-    Greet(name).then(updateResultText);
+    Greet(name).then(updateResultText).then(() => toast("Greeted!"));
   }
 
   return (
     <div id="App">
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <ModeToggle />
-        <div id="result" className="text-3xl font-bold underline text-blue-500">
-          {resultText}
-        </div>
-        <div className="flex align-center mt-2">
-          <Input
-            id="name"
-            onChange={updateName}
-            autoComplete="off"
-            name="input"
-            type="text"
-            placeholder="Enter your name"
-            className="w-[20rem]"
-          />
-          <Button variant="outline" onClick={greet} className="ml-2">
-            Greet
-          </Button>
+        <Toaster />
+        <div className="flex align-center justify-center mt-2">
+          <Card className="p-4">
+            <div className="flex align-center justify-center mb-12">
+              <AspectRatio ratio={16 / 9}>
+                <img src={Logo} alt="Logo" />
+              </AspectRatio>
+            </div>
+            <div className="text-md font-bold text-center">
+              {resultText}
+            </div>
+            <Input
+              id="name"
+              onChange={updateName}
+              autoComplete="off"
+              name="input"
+              type="text"
+              placeholder="Enter your name"
+              className="w-[20rem]"
+            />
+            <Button variant="outline" onClick={greet}>
+              Greet
+            </Button>
+          </Card>
         </div>
       </ThemeProvider>
     </div>
