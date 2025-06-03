@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "win-n8n",
+  "outputfilename": "win-n8n",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Alexander Kuznetsov",
+    "email": "kuznecov.alexandr@gmail.com"
+  }
+}
