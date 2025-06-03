@@ -24,10 +24,13 @@ function App() {
   return (
     <div id="App">
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <ModeToggle />
+       
         <Toaster />
         <div className="flex align-center justify-center mt-2">
           <Card className="p-4">
+            <div className="flex align-end justify-end">
+              <ModeToggle />
+            </div>
             <div className="flex align-center justify-center mb-12">
               <AspectRatio ratio={16 / 9}>
                 <img src={Logo} alt="Logo" />

@@ -2,13 +2,15 @@
 
 ## About
 
-This is an **unofficial Wails desktop app template** featuring a modern stack:
+**A modern Wails desktop app template** featuring a modern stack:
 - **React** for UI
 - **TypeScript** for type safety
 - **Shadcn UI** for accessible, themeable components
 - **Biome** for code formatting and linting
+- **Wails** for desktop app development
+- **Go** for backend
 
-Wails is a framework for building desktop applications using Go for the backend and modern web technologies for the frontend. It enables you to create fast, native-feeling desktop apps with a seamless bridge between Go and JavaScript/TypeScript.
+Wails is a framework for building desktop applications using Go for the backend and modern web technologies for the frontend. It enables you to create fast, native-feeling desktop apps with a seamless bridge between Go and JavaScript/TypeScript. Check official docs for more info: https://wails.io/docs/introduction
 
 You can configure the project by editing `wails.json`. More information about the project settings can be found
 here: https://wails.io/docs/reference/project-config
@@ -18,6 +20,10 @@ here: https://wails.io/docs/reference/project-config
 To run in live development mode, use:
 
 ```sh
+# install dependencies
+make deps
+
+# run in development mode
 make dev
 ```
 
@@ -25,7 +31,7 @@ This will start the app with hot reload for both frontend and backend. For front
 
 ## Building
 
-To build a redistributable, production mode package, use `wails build`.
+To build a redistributable, production mode package, use `make build-[os]`, where `os` is one of `windows`, `linux`, or `mac`.
 
 ## Key Frontend Libraries
 
