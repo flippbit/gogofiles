@@ -1,7 +1,7 @@
-.PHONY: run build-windows clean
+.PHONY: dev build-windows clean
 
 # Run the application in development mode
-run:
+dev:
 	wails dev
 
 # Build the application for Windows

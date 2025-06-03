@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import logo from './assets/images/logo-universal.png';
-import './App.css';
-import {Greet} from "../wailsjs/go/main/App";
+import {Greet} from "../wailsjs/go/main/App.js";
+import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/mode-toggle"
+import { Button } from "@/components/ui/button"
 
 function App() {
     const [resultText, setResultText] = useState("Please enter your name below 👇");
@@ -15,13 +16,14 @@ function App() {
 
     return (
         <div id="App">
-            <img src={logo} id="logo" alt="logo"/>
-            <div id="result" className="result">{resultText}</div>
-            <div id="input" className="input-box">
-                <input id="name" className="input" onChange={updateName} autoComplete="off" name="input" type="text"/>
-                <button className="btn" onClick={greet}>Greet</button>
-            </div>
+            <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+                <ModeToggle />
+                <div id="result" className="text-3xl font-bold underline text-blue-500">{resultText}</div>
+                <input id="name" className="border border-gray-300 rounded px-2 py-1" onChange={updateName} autoComplete="off" name="input" type="text"/>
+                <Button variant='outline' onClick={greet}>Greet</Button>
+            </ThemeProvider>
         </div>
+        
     )
 }
 

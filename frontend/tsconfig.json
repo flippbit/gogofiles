@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
@@ -22,10 +26,10 @@
   },
   "include": [
     "src"
-  ],
+, "src/components/ui", "src/components/theme-provider.tsx", "src/components/mode-toggle.tsx"  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
 }
