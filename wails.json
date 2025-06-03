@@ -9,5 +9,8 @@
   "author": {
     "name": "Alexander Kuznetsov",
     "email": "kuznecov.alexandr@gmail.com"
-  }
+  },
+  "exclude": [
+    ".vscode"
+  ]
 }
