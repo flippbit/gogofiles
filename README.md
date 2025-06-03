@@ -10,6 +10,12 @@
 - **Wails** for desktop app development
 - **Go** for backend
 
+<p align="center">
+<img src="./wails_template.mp4" alt="Wails Template" width="100">
+</p>
+
+</br>
+
 Wails is a framework for building desktop applications using Go for the backend and modern web technologies for the frontend. It enables you to create fast, native-feeling desktop apps with a seamless bridge between Go and JavaScript/TypeScript. Check official docs for more info: https://wails.io/docs/introduction
 
 You can configure the project by editing `wails.json`. More information about the project settings can be found
