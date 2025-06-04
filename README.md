@@ -11,7 +11,7 @@
 - **Go** for backend
 
 <p align="center">
-<video src="./wails_template.mp4" alt="Wails Template" width="100%">
+<video src="./wails_template.mp4" alt="Wails Template" width="100%" />
 </p>
 
 </br>
