@@ -42,6 +42,11 @@ export namespace main {
 	    is_dir: boolean;
 	    size: number;
 	    hash?: string;
+	    // Go type: time
+	    mod_time: any;
+	    // Go type: time
+	    created_time?: any;
+	    permissions: number;
 	    children?: FileNodeWithDetails[];
 	
 	    static createFrom(source: any = {}) {
@@ -55,6 +60,9 @@ export namespace main {
 	        this.is_dir = source["is_dir"];
 	        this.size = source["size"];
 	        this.hash = source["hash"];
+	        this.mod_time = this.convertValues(source["mod_time"], null);
+	        this.created_time = this.convertValues(source["created_time"], null);
+	        this.permissions = source["permissions"];
 	        this.children = this.convertValues(source["children"], FileNodeWithDetails);
 	    }
 	

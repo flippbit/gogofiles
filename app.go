@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/cespare/xxhash/v2"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -86,12 +88,15 @@ func (a *App) CreateFileTree(rootPath string, hideFiles bool) (*FileNode, error)
 
 // FileNodeWithDetails represents a file or directory with additional details
 type FileNodeWithDetails struct {
-	Name     string                 `json:"name"`
-	Path     string                 `json:"path"`
-	IsDir    bool                   `json:"is_dir"`
-	Size     int64                  `json:"size"`
-	Hash     string                 `json:"hash,omitempty"`
-	Children []*FileNodeWithDetails `json:"children,omitempty"`
+	Name         string                 `json:"name"`
+	Path         string                 `json:"path"`
+	IsDir        bool                   `json:"is_dir"`
+	Size         int64                  `json:"size"`
+	Hash         string                 `json:"hash,omitempty"`
+	ModTime      time.Time              `json:"mod_time"`
+	CreatedTime  time.Time              `json:"created_time,omitempty"`
+	Permissions  os.FileMode            `json:"permissions"`
+	Children     []*FileNodeWithDetails `json:"children,omitempty"`
 }
 
 // CreateFileTreeWithDetails recursively steps through a given path to create a file tree with details
@@ -101,17 +106,25 @@ func (a *App) CreateFileTreeWithDetails(rootPath string) (*FileNodeWithDetails, 
 		return nil, err
 	}
 
+	log.Printf("Scanning: %s", absPath)
+
 	info, err := os.Stat(absPath)
 	if err != nil {
 		return nil, err
 	}
 
 	root := &FileNodeWithDetails{
-		Name:  info.Name(),
-		Path:  absPath,
-		IsDir: info.IsDir(),
-		Size:  info.Size(),
+		Name:        info.Name(),
+		Path:        absPath,
+		IsDir:       info.IsDir(),
+		Size:        info.Size(),
+		ModTime:     info.ModTime(),
+		Permissions: info.Mode(),
 	}
+
+	// Note: Getting creation time is OS-specific and not always available
+	// For now, we'll use ModTime as a fallback
+	root.CreatedTime = info.ModTime()
 
 	if !info.IsDir() {
 		file, err := os.Open(absPath)

@@ -26,10 +26,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { CreateFileTree } from "../../wailsjs/go/main/App";
 import type { main } from "../../wailsjs/go/models";
 
-type FileNode = main.FileNode;
+type FileNode = main.FileNodeWithDetails;
 
 function getFileIcon(fileName: string) {
   const extension = fileName.split(".").pop()?.toLowerCase();
@@ -81,6 +80,8 @@ interface TreeNodeProps {
   onToggleFolder: (path: string) => void;
   onNavigateToFolder: (item: FileNode) => void;
   allowToggleFolder: boolean;
+  onSelect?: (item: FileNode, fullPath: string) => void;
+  selectedItem?: FileNode | null;
 }
 
 function TreeNode({
@@ -90,10 +91,18 @@ function TreeNode({
   onToggleFolder,
   onNavigateToFolder,
   allowToggleFolder,
+  onSelect,
+  selectedItem,
 }: TreeNodeProps) {
   const isExpanded = expandedFolders.has(item.path);
+  const isSelected = selectedItem === item;
 
   const handleClick = () => {
+    if (onSelect) {
+      // Calculate the full path relative to root
+      const fullPath = item.path;
+      onSelect(item, fullPath);
+    }
     if (item.is_dir && allowToggleFolder) {
       onToggleFolder(item.path);
     }
@@ -113,7 +122,9 @@ function TreeNode({
   return (
     <div>
       <div
-        className="flex items-center gap-2 px-2 py-1 hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-sm group"
+        className={`flex items-center gap-2 px-2 py-1 hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-sm group ${
+          isSelected ? "bg-accent text-accent-foreground" : ""
+        }`}
         style={{ paddingLeft: `${level * 12 + 8}px` }}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
@@ -167,6 +178,8 @@ function TreeNode({
                 onToggleFolder={onToggleFolder}
                 onNavigateToFolder={onNavigateToFolder}
                 allowToggleFolder={allowToggleFolder}
+                onSelect={onSelect}
+                selectedItem={selectedItem}
               />
             ))}
           </div>
@@ -178,11 +191,15 @@ function TreeNode({
 interface FileBrowserProps {
   fileTree: FileNode | null;
   allowToggleFolder?: boolean;
+  onSelect?: (item: FileNode, fullPath: string) => void;
+  selectedItem?: FileNode | null;
 }
 
 export function FileBrowser({
   fileTree,
   allowToggleFolder = true,
+  onSelect,
+  selectedItem,
 }: FileBrowserProps) {
   if (!fileTree) return null;
 
@@ -340,6 +357,8 @@ export function FileBrowser({
                 onToggleFolder={handleToggleFolder}
                 onNavigateToFolder={handleNavigateToFolder}
                 allowToggleFolder={allowToggleFolder}
+                onSelect={onSelect}
+                selectedItem={selectedItem}
               />
             ))
           ) : (

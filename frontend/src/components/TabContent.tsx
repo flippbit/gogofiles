@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { FileBrowser } from "./file-browser";
+import { MetadataPanel } from "./MetadataPanel";
 import { CreateFileTreeWithDetails } from "../../wailsjs/go/main/App";
 import useTabsStore from "@/store/tabs";
 import type { main } from "../../wailsjs/go/models";
 
-type FileNode = main.FileNode;
+type FileNode = main.FileNodeWithDetails;
 
 interface TabContentProps {
   tabId: string;
@@ -34,6 +35,13 @@ export function TabContent({ tabId }: TabContentProps) {
     }
   };
 
+  const handleSelect = (item: FileNode, fullPath: string) => {
+    updateTab(tabId, {
+      selectedItem: item,
+      selectedItemPath: fullPath,
+    });
+  };
+
   if (!tab) {
     return null;
   }
@@ -61,10 +69,18 @@ export function TabContent({ tabId }: TabContentProps) {
   }
 
   return (
-    <div className="h-full">
-      <FileBrowser
-        fileTree={tab.fileTree}
-        allowToggleFolder={true}
+    <div className="flex h-full">
+      <div className="flex-1">
+        <FileBrowser
+          fileTree={tab.fileTree}
+          allowToggleFolder={true}
+          onSelect={handleSelect}
+          selectedItem={tab.selectedItem}
+        />
+      </div>
+      <MetadataPanel
+        item={tab.selectedItem}
+        itemPath={tab.selectedItemPath}
       />
     </div>
   );

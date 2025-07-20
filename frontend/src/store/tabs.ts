@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { main } from "../../wailsjs/go/models";
 
-type FileNode = main.FileNode;
+type FileNode = main.FileNodeWithDetails;
 
 interface Tab {
   id: string;
@@ -9,6 +9,8 @@ interface Tab {
   path: string;
   fileTree: FileNode | null;
   isLoading: boolean;
+  selectedItem: FileNode | null;
+  selectedItemPath: string;
 }
 
 interface TabsStore {
@@ -30,7 +32,15 @@ const useTabsStore = create<TabsStore>((set, get) => ({
     const title = pathParts[pathParts.length - 1] || path;
     
     set((state) => ({
-      tabs: [...state.tabs, { id, title, path, fileTree: null, isLoading: false }],
+      tabs: [...state.tabs, { 
+        id, 
+        title, 
+        path, 
+        fileTree: null, 
+        isLoading: false,
+        selectedItem: null,
+        selectedItemPath: ""
+      }],
       activeTabId: id,
     }));
     
