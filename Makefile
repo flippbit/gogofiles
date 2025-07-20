@@ -2,7 +2,7 @@
 
 # Run the application in development mode
 dev:
-	wails dev
+	wails dev -tags webkit2_41
 
 # Build the application for Windows
 build-windows:
