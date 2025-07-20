@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/cespare/xxhash/v2"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -143,4 +144,15 @@ func (a *App) CreateFileTreeWithDetails(rootPath string) (*FileNodeWithDetails, 
 	}
 
 	return root, nil
+}
+
+// SelectDirectory opens a native directory selection dialog
+func (a *App) SelectDirectory() (string, error) {
+	selection, err := runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select Directory to Scan",
+	})
+	if err != nil {
+		return "", err
+	}
+	return selection, nil
 }

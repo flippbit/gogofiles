@@ -23,19 +23,19 @@ clean:
 
 # Install frontend dependencies
 deps:
-	cd frontend && npm install
+	cd frontend && yarn install
 
 # Lint frontend code
 lint:
-	cd frontend && npm run lint
+	cd frontend && yarn run lint
 
 # Format frontend code
 format:
-	cd frontend && npm run format
+	cd frontend && yarn run format
 
 # Check frontend code
 check:
-	cd frontend && npm run check
+	cd frontend && yarn run check
 
 # Help command to show available targets
 help:
